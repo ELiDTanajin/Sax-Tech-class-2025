@@ -1,23 +1,32 @@
-import MenuBar from "@/comp/MenuBar"
+import DogCard from "@/comp/DogCard";
+export default async function Home() {
+  const response = await fetch("https://dogapi.dog/api/v2/breeds")
+  const resJson = await response.json()
+  const dogs = resJson.data
 
-export default function Home() {
+  console.log(dogs)
+
+
   return (
-    <div>
-      <div className="wrapper px-[16px]">
-        <header className="flex justify-between items-center">
-          <h1 className="text-[50px] font-bold ">Warframe</h1>
-          <img className="w-[24px] h-[24px]" src="menu-square.svg"/>
-        </header>
-        <main>
-          <input types="text" placeholder="Search" className="p-[16px] pl-[24px] border-gray-500 border-[1px] rounded-[100px] w-[100%]"/>
-        </main>
-      </div>
-      <div className="wrapper px-[16px] mt-4">
-        <img className="w-[100%] mb-4 h-[100%] rounded-[30px]" src="pic2.png"/>
-        <img className="w-[100%] mb-4 h-[100%] rounded-[30px]" src="pic3.png"/>
-        <img className="w-[100%] mb-20 h-[100%] rounded-[30px]" src="pic4.png"/>
-        <MenuBar/>
-      </div>
+    <div className="wrapper p-[16px] pb-[100px]">
+      {/* TOP BAR HEADER */}
+      <header className="flex justify-between items-center mb-[16px]">
+        <h1 className="text-[50px] font-bold">Your Task</h1>
+        <img className="w-[24px] h-[24px]" src="/hamburger.png" />
+      </header>
+      {/* MAIN CONTENT */}
+      <main className="flex flex-col gap-[16px]">
+
+        {dogs.map(dog => (
+          <DogCard name={dog.attributes.name} description={dog.attributes.description}
+            key={dog.id} />
+        ))}
+
+
+        {/* <input type="text" placeholder="Search" className="p-[16px] pl-[24px] border-gray-500 border-[1px] rounded-[100px] w-[100%]" /> */}
+        {/* <img className="db rounded-[24px] w-[100%]" src="/img1.png" />
+        <img className="db rounded-[24px] w-[100%]" src="/img2.png" /> */}
+      </main>
     </div>
   );
 }
